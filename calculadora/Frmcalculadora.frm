@@ -393,8 +393,10 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-Dim numero1, numero2, resultado As Long
+Dim numero1, numero2, resultado As Double
 Dim texto As String
+Dim operacion As String
+Dim primer As Boolean
 
 Private Sub btn0_Click(Index As Integer)
     texto = textResult.Text
@@ -471,5 +473,211 @@ Private Sub btndel_Click(Index As Integer)
     textResult.Text = ""
     numero1 = 0
     numero2 = 0
+    resultado = 0
+    operacion = ""
 End Sub
 
+Private Sub btndiv_Click(Index As Integer)
+If primer Then
+    If textResult.Text <> "" And IsNumeric(textResult.Text) Then
+        primer = False
+        numero1 = CDbl(textResult.Text)
+        operacion = "/"
+        textResult.Text = ""
+    Else
+        MsgBox "Solo se aceptan numeros"
+        textResult.Text = ""
+    End If
+Else
+    If textResult.Text <> "" And IsNumeric(textResult.Text) And IsNumeric(textResult.Text) <> 0 Then
+        numero2 = CDbl(textResult.Text)
+        resultado = Foperacion(numero1, numero2, operacion)
+        textResult.Text = ""
+        numero1 = resultado
+        resultado = 0
+        operacion = "/"
+        primer = True
+        numero2 = 0
+    Else
+        MsgBox "Solo se aceptan numeros Y Su divisor debe ser diferente a 0"
+        textResult.Text = ""
+    End If
+End If
+End Sub
+
+Private Sub btnigual_Click(Index As Integer)
+If operacion <> "" And textResult.Text <> "" And IsNumeric(textResult.Text) Then
+    numero2 = CDbl(textResult.Text)
+    resultado = Foperacion(numero1, numero2, operacion)
+    textResult.Text = ""
+    textResult.Text = CStr(resultado)
+    numero1 = 0
+    resultado = 0
+    operacion = ""
+    primer = True
+    numero2 = 0
+Else
+    textResult.Text = "ERROR!!!!!!!!!!!!!"
+End If
+End Sub
+
+Private Sub btnins_Click(Index As Integer)
+textResult.Text = ""
+End Sub
+
+Private Sub btnmas_Click(Index As Integer)
+    If primer Then
+        If textResult.Text <> "" And IsNumeric(textResult.Text) Then
+            primer = False
+            numero1 = CDbl(textResult.Text)
+            operacion = "*"
+            textResult.Text = ""
+        Else
+            MsgBox "Solo se aceptan numeros"
+            textResult.Text = ""
+        End If
+    Else
+        If textResult.Text <> "" And IsNumeric(textResult.Text) Then
+            numero2 = CDbl(textResult.Text)
+            resultado = Foperacion(numero1, numero2, operacion)
+            textResult.Text = ""
+            numero1 = resultado
+            resultado = 0
+            operacion = "+"
+            primer = True
+            numero2 = 0
+        Else
+            MsgBox "Solo se aceptan numeros"
+            textResult.Text = ""
+        End If
+    End If
+End Sub
+
+Private Sub btnmenos_Click(Index As Integer)
+If textResult.Text <> "" Then
+    If primer Then
+        If textResult.Text <> "" And IsNumeric(textResult.Text) Then
+            primer = False
+            numero1 = CDbl(textResult.Text)
+            operacion = "-"
+            textResult.Text = ""
+        Else
+            MsgBox "Solo se aceptan numeros"
+            textResult.Text = ""
+        End If
+    Else
+        If textResult.Text <> "" And IsNumeric(textResult.Text) Then
+            numero2 = CDbl(textResult.Text)
+            resultado = Foperacion(numero1, numero2, operacion)
+            textResult.Text = ""
+            numero1 = resultado
+            resultado = 0
+            operacion = "-"
+            primer = True
+            numero2 = 0
+        Else
+            MsgBox "Solo se aceptan numeros"
+            textResult.Text = ""
+        End If
+    End If
+Else
+    texto = textResult.Text
+    texto = texto & "-"
+    textResult.Text = ""
+    textResult.Text = texto
+End If
+End Sub
+
+Private Sub btnmult_Click(Index As Integer)
+If primer Then
+    If textResult.Text <> "" And IsNumeric(textResult.Text) Then
+        primer = False
+        numero1 = CDbl(textResult.Text)
+        operacion = "*"
+        textResult.Text = ""
+    Else
+        MsgBox "Solo se aceptan numeros"
+        textResult.Text = ""
+    End If
+Else
+    If textResult.Text <> "" And IsNumeric(textResult.Text) Then
+        numero2 = CDbl(textResult.Text)
+        resultado = Foperacion(numero1, numero2, operacion)
+        textResult.Text = ""
+        numero1 = resultado
+        resultado = 0
+        operacion = "*"
+        primer = True
+        numero2 = 0
+    Else
+        MsgBox "Solo se aceptan numeros"
+        textResult.Text = ""
+    End If
+End If
+End Sub
+
+Private Sub btnpow_Click(Index As Integer)
+If primer Then
+    If textResult.Text <> "" And IsNumeric(textResult.Text) Then
+        numero1 = CDbl(textResult.Text)
+        operacion = "p"
+        resultado = Foperacion(numero1, numero2, operacion)
+        textResult.Text = CStr(resultado)
+        numero1 = resultado
+        resultado = 0
+        operacion = ""
+        primer = True
+        numero2 = 0
+    Else
+        MsgBox "Solo se aceptan numeros"
+        textResult.Text = ""
+    End If
+End If
+End Sub
+
+Private Sub btnpunt_Click(Index As Integer)
+    texto = textResult.Text
+    texto = texto & "."
+    textResult.Text = ""
+    textResult.Text = texto
+End Sub
+
+Private Sub btnraiz_Click(Index As Integer)
+If primer Then
+    If textResult.Text <> "" And IsNumeric(textResult.Text) And CDbl(textResult.Text) >= 0 Then
+        numero1 = CDbl(textResult.Text)
+        operacion = "r"
+        resultado = Foperacion(numero1, numero2, operacion)
+        textResult.Text = CStr(resultado)
+        numero1 = resultado
+        resultado = 0
+        operacion = ""
+        primer = True
+        numero2 = 0
+    Else
+        MsgBox "Solo se aceptan numeros y positivos "
+        textResult.Text = ""
+    End If
+End If
+End Sub
+
+Private Sub Form_Load()
+primer = True
+End Sub
+
+Function Foperacion(ByVal n1 As Double, ByVal n2 As Double, ByVal ope As String) As Double
+    Select Case ope
+    Case "-"
+        Foperacion = n1 - n2
+    Case "+"
+        Foperacion = n1 + n2
+    Case "/"
+        Foperacion = n1 / n2
+    Case "*"
+        Foperacion = n1 * n2
+    Case "r"
+        Foperacion = Sqr(n1)
+    Case "p"
+        Foperacion = n1 ^ 2
+    End Select
+End Function
