@@ -1,0 +1,9 @@
+- cliente
+	- id_cliente
+	- nombre
+	- apellido
+	- direccion
+	- clasificacion
+- producto 
+- inventario
+- factura
