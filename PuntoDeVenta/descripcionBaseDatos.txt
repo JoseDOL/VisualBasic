@@ -1,3 +1,10 @@
+- vendedor
+	- id_vendedor
+	- usuario
+	- contra
+	- nombre
+	- apellido
+	- roll -1 vendedor -2 administrador
 - cliente
 	- id_cliente
 	- nombre
@@ -5,5 +12,34 @@
 	- direccion
 	- clasificacion
 - producto 
+	- id_pruducto
+	- nombre
+	- existencia
+	- descripcion
 - inventario
+	- id_prudcto
+	- canrtidad 
+	- precio
+	-  
 - factura
+	- id_factura
+	- id_cliente
+	- id_vendedor
+	- fecha
+	- total
+- detalleF
+	- id_detalle
+	- id_factura
+	- id_producto
+	- cantidad
+- factura_temp
+	- id_factura
+	- id_cliente
+	- id_vendedor
+	- fecha
+	- total
+- detalleF_temp
+	- id_detalle
+	- id_factura
+	- id_producto
+	- cantidad
